@@ -20,6 +20,9 @@ void add_function(struct f_queue **head, struct f_queue **tail, short f_type, in
 }
 void print(struct f_queue *head)
 {
+    if (!head)
+        printf("empty\n");
+
     for (int i = 1 ; head != NULL; head = head->next)
         printf("node %d: f_type: %d, f_args: %d %d\n", i++, head->f_type, head->f_args[0], head->f_args[1]);
 }

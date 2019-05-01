@@ -8,20 +8,16 @@
 #include <keys_pqueue.h>
 #include <structures.h>
 #include <functions_queue.h>
+#include <recording.h>
+#include <input_cursor.h>
 
 int main()
 {
-    //test_keypresses(100);
-    //test_display_pqueue();
-
     struct f_queue *headptr = NULL;
     struct f_queue *tailptr = NULL;
-
-    add_function(&headptr, &tailptr, 1, 55, 55);
-    add_function(&headptr, &tailptr, 2, 14, 88);
-    add_function(&headptr, &tailptr, 1, 111, 0);
+    record(&headptr, &tailptr, 20);
     print(headptr);
-    print_back(tailptr);
+    //print_back(tailptr);
 
     int i;
     scanf("%d", i);

@@ -1,0 +1,6 @@
+#ifndef INPUT_CURSOR_H_INCLUDED
+#define INPUT_CURSOR_H_INCLUDED
+
+POINT get_cursor();
+
+#endif // INPUT_CURSOR_H_INCLUDED
