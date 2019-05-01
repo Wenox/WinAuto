@@ -5,10 +5,10 @@
 
 bool check_key(int key_id);
 
-int last_pressed_key();
+int last_pressed();
 
-void empty_buffer();
+void clr_system_buffer();
 
-int last_pressed_key_extra();
+void test_keypresses();
 
 #endif // PRESSED_KEY_H_INCLUDED
