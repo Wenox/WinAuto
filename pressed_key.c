@@ -8,13 +8,7 @@
 - false otherwise */
 bool check_key(int key_id)
 {
-    //short state = GetAsyncKeyState(key_id);
-    //if (state == 1)
-    //    return true;
-   // elsea
-     //   return false;
-
-    return (GetAsyncKeyState(key_id) & 0x8001) ? true : false;
+    return (GetAsyncKeyState(key_id) & 0x8000) ? true : false;
 }
 
 /** returns value of last pressed key */
@@ -41,6 +35,6 @@ void test_keypresses(int how_many)
     printf("testing keypresses:\n");
     for (int i = 0; i < how_many; i++) {
         printf("%d\n", last_pressed());
-        Sleep(15);
+        Sleep(20);
     }
 }
