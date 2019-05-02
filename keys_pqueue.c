@@ -1,7 +1,7 @@
 #include <key_codes.h>
 
-/** sorted from the most often pressed key to least often */
-const unsigned short keys_pqueue[21] = { KEY_LMB,
+/** sorted from the most likely most often pressed key to least likely least often */
+const unsigned short keys_pqueue[21] = { KEY_LMB, // highest priority to be checked
 KEY_SPACE,
 KEY_BACK,
 KEY_RETURN,
@@ -21,11 +21,12 @@ KEY_L,
 KEY_S,
 KEY_1,
 KEY_2,
-KEY_3
+KEY_3 // lowest priority
 }; // rest to be filled, in proper priority order, after I get right amount of data from WhatPulse app
 
 const int keys_pqueue_size = sizeof(keys_pqueue) / sizeof(keys_pqueue[0]);
 
+/** used for testing */
 #include <stdio.h>
 void __test_display_pqueue(void)
 {

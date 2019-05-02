@@ -3,20 +3,21 @@
 #include <keys_pqueue.h>
 
 /** returns:
-- true if key was pressed after previous call (least significant bit is set)
+- true if key is pressed at the time of function call (most significant bit is set)
 - false otherwise */
 bool check_key(const short key_id)
 {
-    return (GetAsyncKeyState(key_id) & 0x8000) ? true : false;
+    return (GetAsyncKeyState(key_id) & 0x8000);
 }
 
+/** function clears GetAsyncKeyState's 'system' buffer */
 void clr_system_buffer(void)
 {
     for (int i = 0; i < keys_pqueue_size; i++)
         GetAsyncKeyState(keys_pqueue[i]);
 }
 
-/** returns value of last pressed key */
+/** returns value of currently pressed key with highest priority */
 short last_pressed(void)
 {
     for (int i = 0; i < keys_pqueue_size; i++) {
@@ -28,6 +29,7 @@ short last_pressed(void)
     return 0; // no key was pressed
 }
 
+/** used for testing */
 #include <stdio.h>
 void __test_keypresses(const int how_many)
 {

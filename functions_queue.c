@@ -1,6 +1,9 @@
-#include <structures.h>
 #include <stddef.h>
+#include <stdlib.h>
+#include <structures.h>
 
+
+/** function adds new description of function-call at the start of queue */
 void add_function(struct f_queue **head, struct f_queue **tail, const short f_type, const int arg1, const int arg2)
 {
     struct f_queue *node = malloc(sizeof(struct f_queue));
@@ -19,6 +22,8 @@ void add_function(struct f_queue **head, struct f_queue **tail, const short f_ty
     *head = node;
 }
 
+/** used for testing */
+#include <stdio.h>
 void __print(struct f_queue *head)
 {
     if (!head) {
@@ -30,6 +35,7 @@ void __print(struct f_queue *head)
         printf("node %d: f_type: %d, f_args: %d %d\n", i++, head->f_type, head->f_args[0], head->f_args[1]);
 }
 
+/** used for testing */
 void __print_back(struct f_queue *tail)
 {
     if (!tail) {
