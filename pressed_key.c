@@ -20,9 +20,9 @@ void clr_system_buffer(void)
 /** returns value of currently pressed key with highest priority */
 short last_pressed(void)
 {
+    clr_system_buffer();
     for (int i = 0; i < keys_pqueue_size; i++) {
-        clr_system_buffer();
-        if (check_key(keys_pqueue[i])) { /// && *last_pressed_key != keys_pqueue[i]) {
+        if (check_key(keys_pqueue[i])) {
             return keys_pqueue[i];
         }
     }
