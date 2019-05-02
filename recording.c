@@ -1,10 +1,9 @@
-#include <stdio.h>
 #include <stdbool.h>
 #include <windows.h>
 #include <structures.h>
 #include <input_cursor.h>
-#include <pressed_key.h>
 #include <functions_queue.h>
+#include <pressed_key.h>
 #include <key_codes.h>
 
 #define _GETKEY 1
