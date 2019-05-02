@@ -15,9 +15,9 @@ int main()
 {
     struct f_queue *headptr = NULL;
     struct f_queue *tailptr = NULL;
-    record(&headptr, &tailptr, 20);
-    print(headptr);
-    //print_back(tailptr);
+    record(&headptr, &tailptr, 10);
+    //print(headptr);
+    print_back(tailptr);
 
     int i;
     scanf("%d", i);

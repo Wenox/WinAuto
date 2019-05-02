@@ -3,7 +3,7 @@
 
 void add_function(struct f_queue **head, struct f_queue **tail, short f_type, int arg1, int arg2)
 {
-    struct f_queue *node = (struct f_queue*)malloc(sizeof(struct f_queue));
+    struct f_queue *node = malloc(sizeof(struct f_queue));
     node->f_type = f_type;
     node->f_args[0] = arg1;
     node->f_args[1] = arg2;
