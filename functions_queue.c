@@ -1,7 +1,7 @@
 #include <structures.h>
 #include <stddef.h>
 
-void add_function(struct f_queue **head, struct f_queue **tail, short f_type, int arg1, int arg2)
+void add_function(struct f_queue **head, struct f_queue **tail, const short f_type, const int arg1, const int arg2)
 {
     struct f_queue *node = malloc(sizeof(struct f_queue));
     node->f_type = f_type;
@@ -13,13 +13,13 @@ void add_function(struct f_queue **head, struct f_queue **tail, short f_type, in
         node->next = NULL;
     }
     else {
-        node->next = (*head);
+        node->next = *head;
         (*head)->prev = node;
     }
     *head = node;
 }
 
-void print(struct f_queue *head)
+void __print(struct f_queue *head)
 {
     if (!head) {
         printf("empty\n");
@@ -30,12 +30,13 @@ void print(struct f_queue *head)
         printf("node %d: f_type: %d, f_args: %d %d\n", i++, head->f_type, head->f_args[0], head->f_args[1]);
 }
 
-void print_back(struct f_queue *tail)
+void __print_back(struct f_queue *tail)
 {
     if (!tail) {
         printf("empty\n");
         return;
     }
+
     for (int i = 1 ; tail != NULL; tail = tail->prev)
         printf("node %d: f_type: %d, f_args: %d %d\n", i++, tail->f_type, tail->f_args[0], tail->f_args[1]);
 }

@@ -26,7 +26,8 @@ KEY_3
 
 const int keys_pqueue_size = sizeof(keys_pqueue) / sizeof(keys_pqueue[0]);
 
-void test_display_pqueue()
+#include <stdio.h>
+void __test_display_pqueue(void)
 {
     printf("ASCII codes of keys_pqueue:\n");
     for (int i = 0; i < (sizeof(keys_pqueue)/sizeof(keys_pqueue[0])); i++)

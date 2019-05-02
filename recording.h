@@ -1,7 +1,7 @@
 #ifndef RECORDING_H_INCLUDED
 #define RECORDING_H_INCLUDED
 
-/** returns true if latest added node is sleep function type, false otherwise */
+/** returns true if newly added node is sleep function type, false otherwise */
 bool is_prev_sleep_func(struct f_queue **head);
 
 /** keyboard/mouse recording engine */

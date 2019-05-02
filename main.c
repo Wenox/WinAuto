@@ -15,11 +15,12 @@ int main()
 {
     struct f_queue *headptr = NULL;
     struct f_queue *tailptr = NULL;
-    record(&headptr, &tailptr, 10);
-    //print(headptr);
-    print_back(tailptr);
 
-    int i;
-    scanf("%d", i);
+    record(&headptr, &tailptr, 10);
+    //__print(headptr);
+    __print_back(tailptr);
+
+    int i = -1;
+    scanf("%d", &i);
     return 0;
 }

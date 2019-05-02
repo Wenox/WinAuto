@@ -3,12 +3,12 @@
 
 #include <stdbool.h>
 
-bool check_key(int key_id);
+bool check_key(const short key_id);
 
-int last_pressed();
+void clr_system_buffer(void);
 
-void clr_system_buffer();
+short last_pressed(void);
 
-void test_keypresses();
+void __test_keypresses(const int how_many);
 
 #endif // PRESSED_KEY_H_INCLUDED

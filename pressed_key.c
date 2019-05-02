@@ -6,13 +6,19 @@
 /** returns:
 - true if key was pressed after previous call (least significant bit is set)
 - false otherwise */
-bool check_key(int key_id)
+bool check_key(const short key_id)
 {
     return (GetAsyncKeyState(key_id) & 0x8000) ? true : false;
 }
 
+void clr_system_buffer(void)
+{
+    for (int i = 0; i < keys_pqueue_size; i++)
+        GetAsyncKeyState(keys_pqueue[i]);
+}
+
 /** returns value of last pressed key */
-int last_pressed()
+short last_pressed(void)
 {
     for (int i = 0; i < keys_pqueue_size; i++) {
         clr_system_buffer();
@@ -23,15 +29,9 @@ int last_pressed()
     return 0; // no key was pressed
 }
 
-void clr_system_buffer()
+#include <stdio.h>
+void __test_keypresses(const int how_many)
 {
-    for (int i = 0; i < keys_pqueue_size; i++)
-        GetAsyncKeyState(keys_pqueue[i]);
-}
-
-void test_keypresses(int how_many)
-{
-    Sleep(3000);
     printf("testing keypresses:\n");
     for (int i = 0; i < how_many; i++) {
         printf("%d\n", last_pressed());
