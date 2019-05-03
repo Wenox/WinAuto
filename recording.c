@@ -6,9 +6,9 @@
 #include <pressed_key.h>
 #include <key_codes.h>
 
-#define _GETKEY 1
-#define _SLEEP 2
-#define _GETCURSOR 3
+#define _GETCURSOR 1
+#define _GETKEY 2
+#define _SLEEP 3
 
 /** returns true if newly added node is function of sleep type, false otherwise */
 bool is_prev_sleep_func(struct f_queue **head)
@@ -23,9 +23,15 @@ void record(struct f_queue **head, struct f_queue **tail, const int sleep_dur)
     POINT P[2] = {};                // buffer for curr and prev cursor position
 
     while(key_buff[1] != KEY_3) {   // stop recording when '3' is pressed
+        /** add cursor to queue */
+        P[1] = get_cursor();
+        if (P[0].x != P[1].x && P[0].y != P[1].y) // if current cursor pos != previous
+            add_function(head, tail, _GETCURSOR, P[1].x, P[1].y);
+        P[0] = P[1];
+
         /** add keypress to queue */
-        key_buff[1] = last_pressed();
-        if (key_buff[1] != key_buff[0])
+        key_buff[1] = get_keystroke();
+        if (key_buff[1] != key_buff[0] && key_buff[1] != 0)
             add_function(head, tail, _GETKEY, key_buff[1], -1);
         key_buff[0] = key_buff[1];
 
@@ -35,11 +41,5 @@ void record(struct f_queue **head, struct f_queue **tail, const int sleep_dur)
             add_function(head, tail, _SLEEP, sleep_dur, -1);
         else
             (*head)->f_args[0] += sleep_dur;
-
-        /** add cursor to queue */
-        P[1] = get_cursor();
-        if (P[0].x != P[1].x && P[0].y != P[1].y) // if current cursor pos != previous
-            add_function(head, tail, _GETCURSOR, P[1].x, P[1].y);
-        P[0] = P[1];
     }
 }
