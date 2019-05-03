@@ -15,8 +15,8 @@ int main()
 
     printf("recording\n");
     record(&headptr, &tailptr, 10);
-    __print(headptr);
-    //__print_back(tailptr);
+    //__print(headptr);
+    __print_back(tailptr);
 
     Sleep(5000);
     printf("playing recording\n");

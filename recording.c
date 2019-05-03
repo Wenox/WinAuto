@@ -20,22 +20,20 @@ bool is_prev_sleep_func(struct f_queue **head)
 void record(struct f_queue **head, struct f_queue **tail, const int sleep_dur)
 {
     int key_buff[2] = {-1, -1};     // buffer for curr and prev pressed key
-    POINT P[2] = {};                // buffer for curr and prev cursor position
+    POINT P[2] = {0};               // buffer for curr and prev cursor position
 
-    int k = 0;
     while(key_buff[1] != KEY_W) {   // stop recording when '3' is pressed
         /** add cursor to queue */
         P[1] = get_cursor();
-        /** requires optimalization FIX */
-        //if (P[0].x != P[1].x && P[0].y != P[1].y) { // if current cursor pos != previous
+        if (P[0].x != P[1].x || P[0].y != P[1].y) { // if current cursor pos != previous
             add_function(head, tail, _GETCURSOR, P[1].x, P[1].y); // add it to the queue
-            //P[0] = P[1];
-        //}
+            P[0] = P[1];
+        }
 
         /** add keypress to queue */
         key_buff[1] = get_keystroke();
-        if (key_buff[1] != key_buff[0] && key_buff[1] != 0) // if there was a keystroke
-            add_function(head, tail, _GETKEY, key_buff[1], -1); // add it to the queue
+        if (key_buff[1] != key_buff[0] && key_buff[1] != 0)     // if there was keystroke
+            add_function(head, tail, _GETKEY, key_buff[1], -1); // then add it to the queue
         key_buff[0] = key_buff[1];
 
         /** add sleep to queue */
