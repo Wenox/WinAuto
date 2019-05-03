@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <structures.h>
 
-
 /** function adds new description of function-call at the start of queue */
 void add_function(struct f_queue **head, struct f_queue **tail, const short f_type, const int arg1, const int arg2)
 {
@@ -22,7 +21,8 @@ void add_function(struct f_queue **head, struct f_queue **tail, const short f_ty
     *head = node;
 }
 
-void delete_first(struct f_queue **head)
+/** currently not used, to be fixed */
+void __delete_first(struct f_queue **head)
 {
     /** to be fixed */
     struct f_queue *to_be_deleted = *head;
@@ -31,7 +31,7 @@ void delete_first(struct f_queue **head)
     free(to_be_deleted);
 }
 
-/** used for testing */
+/** used for testing. prints the functions queue forwards */
 #include <stdio.h>
 void __print(struct f_queue *head)
 {
@@ -44,7 +44,7 @@ void __print(struct f_queue *head)
         printf("node %d: f_type: %d, f_args: %d %d\n", i++, head->f_type, head->f_args[0], head->f_args[1]);
 }
 
-/** used for testing */
+/** used for testing. prints the functions queue backwards */
 void __print_back(struct f_queue *tail)
 {
     if (!tail) {

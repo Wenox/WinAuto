@@ -2,9 +2,7 @@
 #include <stdbool.h>
 #include <keys_pqueue.h>
 
-/** returns:
-- true if key is pressed at the time of function call (most significant bit is set)
-- false otherwise */
+/** returns true if key was pressed at the time of function call, false otherwise */
 bool check_key(const short key_id)
 {
     return (GetAsyncKeyState(key_id) & 0x8000);
