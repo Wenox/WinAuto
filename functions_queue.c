@@ -22,6 +22,15 @@ void add_function(struct f_queue **head, struct f_queue **tail, const short f_ty
     *head = node;
 }
 
+void delete_first(struct f_queue **head)
+{
+    /** to be fixed */
+    struct f_queue *to_be_deleted = *head;
+    *head = to_be_deleted->next;
+    (*head)->prev = NULL;
+    free(to_be_deleted);
+}
+
 /** used for testing */
 #include <stdio.h>
 void __print(struct f_queue *head)
