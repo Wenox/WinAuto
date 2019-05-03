@@ -22,12 +22,15 @@ void record(struct f_queue **head, struct f_queue **tail, const int sleep_dur)
     int key_buff[2] = {-1, -1};     // buffer for curr and prev pressed key
     POINT P[2] = {};                // buffer for curr and prev cursor position
 
-    while(key_buff[1] != KEY_3) {   // stop recording when '3' is pressed
+    int k = 0;
+    while(key_buff[1] != KEY_W) {   // stop recording when '3' is pressed
         /** add cursor to queue */
         P[1] = get_cursor();
-        if (P[0].x != P[1].x && P[0].y != P[1].y) // if current cursor pos != previous
+        /** requires optimalization FIX */
+        //if (P[0].x != P[1].x && P[0].y != P[1].y) { // if current cursor pos != previous
             add_function(head, tail, _GETCURSOR, P[1].x, P[1].y); // add it to the queue
-        P[0] = P[1];
+            //P[0] = P[1];
+        //}
 
         /** add keypress to queue */
         key_buff[1] = get_keystroke();
