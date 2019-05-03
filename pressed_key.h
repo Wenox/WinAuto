@@ -7,7 +7,7 @@ bool check_key(const short key_id);
 
 void clr_system_buffer(void);
 
-short last_pressed(void);
+short get_keystroke(void);
 
 void __test_keypresses(const int how_many);
 

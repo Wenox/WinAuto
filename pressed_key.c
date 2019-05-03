@@ -18,7 +18,7 @@ void clr_system_buffer(void)
 }
 
 /** returns value of currently pressed key with highest priority */
-short last_pressed(void)
+short get_keystroke(void)
 {
     clr_system_buffer();
     for (int i = 0; i < keys_pqueue_size; i++) {
@@ -33,9 +33,9 @@ short last_pressed(void)
 #include <stdio.h>
 void __test_keypresses(const int how_many)
 {
-    printf("testing keypresses:\n");
+    //printf("testing keypresses:\n");
     for (int i = 0; i < how_many; i++) {
-        printf("%d\n", last_pressed());
+        //printf("%d\n", get_keystroke());
         Sleep(20);
     }
 }

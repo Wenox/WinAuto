@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <time.h>
 #include <windows.h>
 #include <smooth_cursor.h>
 #include <pressed_key.h>
@@ -11,7 +12,7 @@ int main()
     struct f_queue *headptr = NULL;
     struct f_queue *tailptr = NULL;
 
-    record(&headptr, &tailptr, 10);
+    record(&headptr, &tailptr, 20);
     //__print(headptr);
     __print_back(tailptr);
 
