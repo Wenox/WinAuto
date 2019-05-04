@@ -1,10 +1,7 @@
 #include <stdio.h>
 #include <time.h>
 #include <windows.h>
-#include <smooth_cursor.h>
-#include <pressed_key.h>
 #include <structures.h>
-#include <functions_queue.h>
 #include <recording.h>
 #include <replay.h>
 

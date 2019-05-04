@@ -1,7 +1,12 @@
 #include <windows.h>
 #include <time.h>
+#include <stdio.h>
 
-/** not used */
+/** Functions in this file are not used yet. Just definitions, waiting for their usage later on. */
+/** Functions in this file are not used yet. Just definitions, waiting for their usage later on. */
+/** Functions in this file are not used yet. Just definitions, waiting for their usage later on. */
+
+
 void move_cursor(const int x1, const int y1, const int x2, const int y2, const int duration)
 {
     SetCursorPos(x1, y1);
@@ -81,6 +86,7 @@ short smooth_cursor_fps(float x1, float y1, const short x2, const short y2, cons
         smooth_transition(direction_LD, &x1, &y1, x_jump, y_jump, sleep_delay, num_of_jumps, x2, y2, duration);
     else if (x1 >= x2 && y1 >= y2)
         smooth_transition(direction_LU, &x1, &y1, x_jump, y_jump, sleep_delay, num_of_jumps, x2, y2, duration);
+    return -1;
 }
 
 /** debugging/testing */

@@ -1,7 +1,11 @@
 #ifndef SMOOTH_CURSOR_H_INCLUDED
 #define SMOOTH_CURSOR_H_INCLUDED
 
-/** not used */
+/** Functions in this file are not used yet. Just declarations, waiting for their usage later on. */
+/** Functions in this file are not used yet. Just declarations, waiting for their usage later on. */
+/** Functions in this file are not used yet. Just declarations, waiting for their usage later on. */
+
+
 void move_cursor(const int x1, const int y1, const int x2, const int y2, const int duration);
 
 void direction_RD(float *x1, float *y1, float x_jump, float y_jump, float sleep_delay);

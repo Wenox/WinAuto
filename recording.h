@@ -1,6 +1,8 @@
 #ifndef RECORDING_H_INCLUDED
 #define RECORDING_H_INCLUDED
 
+#include <stdbool.h>
+
 /** adds latest keystroke's description to the functions queue */
 void add_cursor(struct f_queue **head, struct f_queue **tail, POINT P[2]);
 
