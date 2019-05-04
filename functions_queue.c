@@ -30,28 +30,3 @@ void __delete_first(struct f_queue **head)
     (*head)->prev = NULL;
     free(to_be_deleted);
 }
-
-/** used for testing. prints the functions queue forwards */
-#include <stdio.h>
-void __print(struct f_queue *head)
-{
-    if (!head) {
-        printf("empty\n");
-        return;
-    }
-
-    for (int i = 1 ; head != NULL; head = head->next)
-        printf("node %d: f_type: %d, f_args: %d %d\n", i++, head->f_type, head->f_args[0], head->f_args[1]);
-}
-
-/** used for testing. prints the functions queue backwards */
-void __print_back(struct f_queue *tail)
-{
-    if (!tail) {
-        printf("empty\n");
-        return;
-    }
-
-    for (int i = 1 ; tail != NULL; tail = tail->prev)
-        printf("node %d: f_type: %d, f_args: %d %d\n", i++, tail->f_type, tail->f_args[0], tail->f_args[1]);
-}

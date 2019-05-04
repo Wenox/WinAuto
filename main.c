@@ -4,6 +4,7 @@
 #include <structures.h>
 #include <recording.h>
 #include <replay.h>
+#include "test/test.h"
 
 int main()
 {
@@ -12,7 +13,7 @@ int main()
 
     printf("recording\n");
     record(&headptr, &tailptr, 10);
-    __print_back(tailptr);
+    __print_f_queue_back(tailptr);
 
     Sleep(5000);
     printf("playing recording\n");

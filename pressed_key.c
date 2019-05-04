@@ -26,14 +26,3 @@ short get_keystroke(void)
     }
     return 0; // no key was pressed
 }
-
-/** used for testing */
-#include <stdio.h>
-void __test_keypresses(const int how_many)
-{
-    printf("testing keypresses:\n");
-    for (int i = 0; i < how_many; i++) {
-        printf("%d\n", get_keystroke());
-        Sleep(20);
-    }
-}

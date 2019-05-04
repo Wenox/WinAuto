@@ -5,7 +5,4 @@ extern const unsigned short keys_pqueue[25];
 
 extern const int keys_pqueue_size;
 
-/** used for testing */
-void __test_display_pqueue(void);
-
 #endif // KEYS_PQUEUE_H_INCLUDED

@@ -12,7 +12,4 @@ void clr_system_buffer(void);
 /** returns value of currently pressed key with highest priority */
 short get_keystroke(void);
 
-/** used for testing */
-void __test_keypresses(const int how_many);
-
 #endif // PRESSED_KEY_H_INCLUDED

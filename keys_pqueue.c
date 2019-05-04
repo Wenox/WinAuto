@@ -29,12 +29,3 @@ KEY_3 // lowest priority
 }; // rest to be filled, in proper priority order, after I get right amount of data from WhatPulse app
 
 const int keys_pqueue_size = sizeof(keys_pqueue) / sizeof(keys_pqueue[0]);
-
-/** used for testing */
-#include <stdio.h>
-void __test_display_pqueue(void)
-{
-    printf("ASCII codes of keys_pqueue:\n");
-    for (int i = 0; i < (sizeof(keys_pqueue)/sizeof(keys_pqueue[0])); i++)
-        printf("key %d: %d\n", i + 1, keys_pqueue[i]);
-}
