@@ -1,6 +1,6 @@
 #define WINVER 0x0500
 #include <windows.h>
-#include <structures.h>
+#include <f_queue.h>
 
 #define _GETCURSOR 1
 #define _GETKEY 2

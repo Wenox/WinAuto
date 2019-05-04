@@ -1,5 +1,11 @@
-#ifndef STRUCTURES_H_INCLUDED
-#define STRUCTURES_H_INCLUDED
+#ifndef F_QUEUE_H_INCLUDED
+#define F_QUEUE_H_INCLUDED
+
+struct f_queue {
+    short f_type;      // tbd(?): replace with enum (?)
+    int f_args[2];
+    struct f_queue *next, *prev;
+};
 
 /** Main structure which is filled during recording.
  *  Contains data organized in proper order representing corresponding function calls:
@@ -11,12 +17,6 @@
  *   - cursos's position is added if and only if the cursor is moving
  *   - keypresses are assumed to be instantaneous, hence prolonged keypresses are neglected (assumed as one keypress)
  *  Structure is filled by record() and then used for replay of the recording by play_recording().
- */
+*/
 
-struct f_queue {
-    short f_type;      // tbd(?): replace with enum (?)
-    int f_args[2];
-    struct f_queue *next, *prev;
-};
-
-#endif // STRUCTURES_H_INCLUDED
+#endif // F_QUEUE_H_INCLUDED

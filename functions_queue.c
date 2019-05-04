@@ -1,6 +1,6 @@
 #include <stddef.h>
 #include <stdlib.h>
-#include <structures.h>
+#include <f_queue.h>
 
 /** function adds new description of function-call at the start of queue */
 void add_function(struct f_queue **head, struct f_queue **tail, const short f_type, const int arg1, const int arg2)

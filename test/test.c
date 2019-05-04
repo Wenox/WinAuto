@@ -2,7 +2,7 @@
 #include <windows.h>
 #include <../pressed_key.h>
 #include <../keys_pqueue.h>
-#include <../structures.h>
+#include <../f_queue.h>
 
 void __test_keystrokes(const int how_many, const int sleep_dur)
 {

@@ -1,6 +1,6 @@
 #include <stdbool.h>
 #include <windows.h>
-#include <structures.h>
+#include <f_queue.h>
 #include <input_cursor.h>
 #include <functions_queue.h>
 #include <pressed_key.h>

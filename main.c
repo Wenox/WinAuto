@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <time.h>
 #include <windows.h>
-#include <structures.h>
+#include <f_queue.h>
 #include <recording.h>
 #include <replay.h>
 #include "test/test.h"
