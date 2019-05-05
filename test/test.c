@@ -33,7 +33,7 @@ void __test_print_f_queue(struct f_queue *head)
 }
 
 /** prints the functions queue backwards */
-void __print_f_queue_back(struct f_queue *tail)
+void __test_print_f_queue_back(struct f_queue *tail)
 {
     if (!tail) {
         printf("empty\n");
