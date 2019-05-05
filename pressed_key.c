@@ -19,10 +19,9 @@ void clr_system_buffer(void)
 short get_keystroke(void)
 {
     clr_system_buffer();
-    for (int i = 0; i < keys_pqueue_size; i++) {
-        if (check_key(keys_pqueue[i])) {
+    for (int i = 0; i < keys_pqueue_size; i++)
+        if (check_key(keys_pqueue[i]))
             return keys_pqueue[i];
-        }
-    }
+
     return 0; // no key was pressed
 }
