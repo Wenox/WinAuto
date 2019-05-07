@@ -23,6 +23,7 @@ void __test_print_pqueue(void)
 /** prints the functions queue forwards */
 void __test_print_f_queue(struct f_queue *head)
 {
+    printf("printing forwards:\n");
     if (!head) {
         printf("empty\n");
         return;
@@ -35,6 +36,7 @@ void __test_print_f_queue(struct f_queue *head)
 /** prints the functions queue backwards */
 void __test_print_f_queue_back(struct f_queue *tail)
 {
+    printf("printing backwards:\n");
     if (!tail) {
         printf("empty\n");
         return;

@@ -6,6 +6,7 @@
 #include <replay.h>
 #include "test/test.h"
 
+
 int main()
 {
     struct f_queue *headptr = NULL;
@@ -13,20 +14,20 @@ int main()
 
     printf("recording [press W to stop]\n");
     record(&headptr, &tailptr, 10);
+    printf("Playing recording");
     play_recording(tailptr);
-
+    save_recording(tailptr);
     free_recording(&headptr, &tailptr);
-    __test_print_f_queue_back(tailptr);
-    __test_print_f_queue(headptr);
 
     int i = -1;
     scanf("%d", &i);
     return 0;
 }
 
-/*void save_file(struct f_queue *tail)
+/** TEMPORARY */
+void save_recording(struct f_queue *tail)
 {
-    char *file_name = "file.txt";
+    char *file_name = "recording.txt";
 
     FILE *f = fopen(file_name, "w");
     if (f == NULL) {
@@ -40,6 +41,6 @@ int main()
         line_counter++;
         tail = tail->prev;
     }
-    fprintf(f, "num of lines: %d\n", line_counter);
+    fprintf(f, "num of nodes: %d\n", line_counter);
     fclose(f);
-}*/
+}
