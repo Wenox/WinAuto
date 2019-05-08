@@ -49,9 +49,9 @@ void add_sleep(struct f_queue **head, struct f_queue **tail, const int sleep_dur
 void record(struct f_queue **head, struct f_queue **tail, const int sleep_dur)
 {
     int key_buff[2] = {-1, -1};               // buffer for curr and prev pressed key
-    POINT cursor_buff[2] = {0};               // buffer for curr and prev cursor position
+    POINT cursor_buff[2] = {-1};              // buffer for curr and prev cursor position
 
-    while(key_buff[1] != KEY_W) {             // stop recording when '3' is pressed
+    while(key_buff[1] != KEY_W) {             // stop recording when 'W' is pressed (to be improved)
         add_cursor(head, tail, cursor_buff);
         add_keystroke(head, tail, key_buff);
         add_sleep(head, tail, sleep_dur);

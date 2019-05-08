@@ -14,7 +14,6 @@ int main()
 
     printf("recording [press W to stop]\n");
     record(&headptr, &tailptr, 10);
-    printf("Playing recording");
     play_recording(tailptr);
     save_recording(tailptr);
     free_recording(&headptr, &tailptr);
