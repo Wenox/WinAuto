@@ -42,6 +42,7 @@ void send_input(const int KEY_CODE)
 /** function replays the recording */
 void play_recording(struct f_queue *tail)
 {
+    printf("Playing recording\n");
     while (tail) {
         if (tail->f_type == _GETCURSOR)
             SetCursorPos(tail->f_args[0], tail->f_args[1]);
