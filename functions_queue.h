@@ -13,4 +13,12 @@ void free_tail(struct f_queue **head, struct f_queue **tail);
 /** function frees all nodes from f_queue, without introducing any excessive 'if' statements */
 void free_recording(struct f_queue **head, struct f_queue **tail);
 
+void make_queue_cyclic(struct f_queue *head, struct f_queue *tail);
+
+void unmake_queue_cyclic(struct f_queue *head, struct f_queue *tail);
+
+void trim_head(struct f_queue **head);
+
+void trim_list(struct f_queue **head);
+
 #endif // FUNCTIONS_QUEUE_H_INCLUDED

@@ -4,11 +4,24 @@
 #include <recording.h>
 #include <files.h>
 #include <replay.h>
+#include <f_queue.h>
 
-void draw_menu()
+void draw_menu(const int error_id)
 {
     system("cls");
-    printf("WinAuto\n");
+    switch (error_id) {
+        case 0:
+            printf("WinAuto\n");
+            break;
+        case 1:
+            printf("ERROR: File name must end with .txt suffix\n\n");
+            break;
+        case 2:
+            printf("ERROR: No such file\n\n");
+            break;
+        default: // do nothing
+            break;
+    }
     printf("Press 1 to set global hotkey\n");
     printf("Press 2 to create new recording\n");
     printf("Press 3 to load recording from file\n");
@@ -57,9 +70,9 @@ void exec_play_recording(struct f_queue *head, struct f_queue *tail, const int c
         play_recording(tail);
 }
 
-void init_menu(struct f_queue *head, struct f_queue *tail)
+void init_menu(struct f_queue *head, struct f_queue *tail, const int error_id)
 {
-    draw_menu();
+    draw_menu(error_id);
 
     int choice = get_choice();
 
@@ -77,8 +90,9 @@ void init_menu(struct f_queue *head, struct f_queue *tail)
                     trim_list(&head);
                     save_recording(tail, file_name);
                     free_recording(&head, &tail);
+                    init_menu(head, tail, 0);
             }
-            init_menu(head, tail);
+            init_menu(head, tail, 1);
             break;
         case 3:
             printf("Type in file name (i.e: myfile.txt):\n");
@@ -89,12 +103,11 @@ void init_menu(struct f_queue *head, struct f_queue *tail)
                 exec_play_recording(head, tail, cycles_num);
                 FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
                 free_recording(&head, &tail);
+                init_menu(head, tail, 0);
             }
-            init_menu(head, tail);
+            init_menu(head, tail, 2);
             break;
-        default:
-            system("cls");
-            printf("No such thing...\n");
-            init_menu(head, tail);
+        default: // do nothing
+            break;
     }
 }
