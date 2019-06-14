@@ -47,3 +47,29 @@ void free_recording(struct f_queue **head, struct f_queue **tail)
     free_all_but_tail(head);
     free_tail(head, tail);
 }
+
+void make_queue_cyclic(struct f_queue *head, struct f_queue *tail)
+{
+    tail->next = head;
+    head->prev = tail;
+}
+
+void unmake_queue_cyclic(struct f_queue *head, struct f_queue *tail)
+{
+    tail->next = NULL;
+    head->prev = NULL;
+}
+
+void trim_head(struct f_queue **head)
+{
+    struct f_queue *to_be_deleted = *head;
+    *head = to_be_deleted->next;
+    free((*head)->prev);
+    (*head)->prev = NULL;
+}
+
+void trim_list(struct f_queue **head)
+{
+    trim_head(head);
+    trim_head(head);
+}

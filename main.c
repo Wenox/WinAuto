@@ -5,6 +5,7 @@
 #include <functions_queue.h>
 #include <recording.h>
 #include <replay.h>
+#include <menu.h>
 #include <files.h>
 #include "test/test.h"
 
@@ -13,11 +14,13 @@ int main()
     struct f_queue *headptr = NULL;
     struct f_queue *tailptr = NULL;
 
-    load_recording(&headptr, &tailptr);
+    init_menu(headptr, tailptr);
+    //load_recording(&headptr, &tailptr, "recording.txt");
+    //__test_print_f_queue_back(tailptr);
     //record(&headptr, &tailptr, 10);
-    play_recording(tailptr);
+    //play_recording(tailptr);
     //save_recording(tailptr);
-    free_recording(&headptr, &tailptr);
+    //free_recording(&headptr, &tailptr);
 
     int i = -1;
     scanf("%d", &i);
