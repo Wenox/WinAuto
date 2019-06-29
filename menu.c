@@ -25,6 +25,7 @@ void draw_menu(const int error_id)
     printf("Press 1 to set global hotkey\n");
     printf("Press 2 to create new recording\n");
     printf("Press 3 to load recording from file\n");
+    printf("Press 4 to exit\n");
 }
 
 int get_choice()
@@ -107,6 +108,8 @@ void init_menu(struct f_queue *head, struct f_queue *tail, const int error_id)
             }
             init_menu(head, tail, 2);
             break;
+        case 4:
+            return;
         default: // do nothing
             break;
     }
