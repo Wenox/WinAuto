@@ -19,11 +19,11 @@ enum menu_flags {
     STOPPED_SCREENSAVER
 };
 
-void draw_menu(int err_id)
+void draw_menu(const int flag_id)
 {
     system("cls");
 
-    switch (err_id) {
+    switch (flag_id) {
         case 0:
             printf("WinAuto\n");
             break;
@@ -51,7 +51,7 @@ void draw_menu(int err_id)
     printf("Press 4 to start screensaver\n");
 }
 
-int get_menu_choice()
+int get_menu_choice(void)
 {
     int choice = 0;
 
@@ -62,7 +62,7 @@ int get_menu_choice()
     return choice;
 }
 
-int get_hotkey()
+int get_hotkey(void)
 {
     printf("Set hotkey: \n");
     int hotkey = 0;
@@ -87,7 +87,7 @@ bool str_ends_with(const char *source, const char *suffix)
     return (source_len >= suffix_len) && (0 == strcmp(source + (source_len - suffix_len), suffix));
 }
 
-int get_cycles_num()
+int get_cycles_num(void)
 {
     printf("How many playing cycles? (>5 to play infinitely, default 1):\n");
     int cycles_num = 1;
@@ -116,9 +116,9 @@ void exec_play_recording(struct f_queue *head, struct f_queue *tail, const int c
         play_recording(tail, hotkey_id);
 }
 
-void init_menu(struct f_queue *head, struct f_queue *tail, int err_id, int hotkey_id); /// prevents cyclic dependency
+void init_menu(struct f_queue *head, struct f_queue *tail, const int flag_id, const int hotkey_id); /// prevents cyclic dependency
 
-void chosen_recording(struct f_queue *head, struct f_queue *tail, int hotkey_id)
+void chosen_recording(struct f_queue *head, struct f_queue *tail, const int hotkey_id)
 {
     printf("Save recording as (i.e: myrecording.txt):\n");
     char file_name[64];
@@ -152,9 +152,9 @@ void chosen_playback(struct f_queue *head, struct f_queue *tail, const int hotke
     init_menu(head, tail, ERROR_READING_FILE, hotkey_id);
 }
 
-void init_menu(struct f_queue *head, struct f_queue *tail, int err_id, int hotkey_id)
+void init_menu(struct f_queue *head, struct f_queue *tail, const int flag_id, const int hotkey_id)
 {
-    draw_menu(err_id);
+    draw_menu(flag_id);
 
     int choice = get_menu_choice();
     static int hotkey = KEY_F5; /// default hotkey

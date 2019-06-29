@@ -2,6 +2,7 @@
 #include <time.h>
 #include <stdio.h>
 #include <pressed_key.h>
+#include <smooth_cursor.h>
 
 /** Functions in this file are not used yet. Just definitions, waiting for their usage later on. */
 /** Functions in this file are not used yet. Just definitions, waiting for their usage later on. */
@@ -58,7 +59,7 @@ void smooth_transition(void(*direction)(float *, float *, const float, const flo
                        const short y2,
                        const short duration)
 {
-    SetCursorPos(x1, y1);
+    SetCursorPos((int) x1, (int) y1);
     clock_t move_duration = clock();
     while (num_of_jumps > 0) {
         direction(x1, y1, x_jump, y_jump, sleep_delay);
@@ -101,7 +102,7 @@ int get_input(const int MIN, const int MAX)
     return input;
 }
 
-void wrapper_get_input(int *speed, int *min_fps)
+void wrapper_get_input(int * const speed, int * const min_fps)
 {
     printf("Choose speed of cursor [1 - slowest, 10 - fastest]:\n");
     *speed = 11 - get_input(1, 10);
@@ -110,7 +111,7 @@ void wrapper_get_input(int *speed, int *min_fps)
     *min_fps = get_input(1, 99);
 }
 
-void exec_screen_saver(int hotkey_id)
+void exec_screen_saver(const int hotkey_id)
 {
     const int gScreenWidth = GetSystemMetrics(SM_CXSCREEN);
     const int gScreenHeight = GetSystemMetrics(SM_CYSCREEN);
@@ -125,7 +126,7 @@ void exec_screen_saver(int hotkey_id)
 }
 
 /** debugging/testing */
-void screen_saver(int x2, int y2, int screen_width, int screen_height, int speed, int min_fps, int hotkey_id)
+void screen_saver(int x2, int y2, const int screen_width, const int screen_height, const int speed, const int min_fps, const int hotkey_id)
 {
     if (check_key(hotkey_id)) /// stop condition: screensaver ends when hotkey is HELD
         return;

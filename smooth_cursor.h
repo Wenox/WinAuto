@@ -29,11 +29,11 @@ short smooth_cursor_fps(float x1, float y1, const short x2, const short y2, cons
 
 int get_input(const int MIN, const int MAX);
 
-void wrapper_get_input(int *speed, int *min_fps);
+void wrapper_get_input(int * const speed, int * const min_fps);
 
-void exec_screen_saver(int hotkey_id);
+void exec_screen_saver(const int hotkey_id);
 
 /** debugging/testing function, to be removed or to be fixed */
-void screen_saver(int x2, int y2, int screen_width, int screen_height, int speed, int min_fps, int hotkey_id);
+void screen_saver(int x2, int y2, const int screen_width, const int screen_height, const int speed, const int min_fps, const int hotkey_id);
 
 #endif // SMOOTH_CURSOR_H_INCLUDED
