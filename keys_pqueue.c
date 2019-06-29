@@ -1,12 +1,14 @@
+/** @file */
+
 #include <key_codes.h>
 
-/** sorted from the most likely most often pressed key to least likely least often */
+/** Sorted from the most likely most often pressed key to least likely least often. The priority has been determined by nearly <b>2 000 000</b> registered keypresses throughout weeks of recording. */
 const unsigned short keys_pqueue[104] = {
-KEY_LMB, // highest priority to be checked
-KEY_RMB,
-KEY_SPACE,
-KEY_A,
-KEY_E,
+KEY_LMB,    ///< Highest priority to be checked
+KEY_RMB,    ///< Slightly lower priority to be checked, still second highest
+KEY_SPACE,  ///< 3rd highest priority to be checked
+KEY_A,      ///< 4th highest priority to be checked
+KEY_E,      ///< . . .
 KEY_O,
 KEY_I,
 KEY_BACK,
@@ -104,8 +106,9 @@ KEY_SEPARATOR,
 KEY_SUBTRACT,
 KEY_DECIMAL,
 KEY_NUMLCK,
-KEY_SCLLCK,
-KEY_LINE,
+KEY_SCLLCK, ///< Second lowest priority to be checked
+KEY_LINE,   ///< Lowest priority to be checked
 };
 
+/** Determines the size of keys priority queue. */
 const int keys_pqueue_size = sizeof(keys_pqueue) / sizeof(keys_pqueue[0]);

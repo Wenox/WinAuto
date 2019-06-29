@@ -1,3 +1,5 @@
+/** @file */
+
 #include <stdio.h>
 #include <key_codes.h>
 #include <windows.h>
@@ -9,14 +11,15 @@
 #include <pressed_key.h>
 #include <smooth_cursor.h>
 
-enum menu_flags {
-    NO_ERRORS,
-    ERROR_NO_TXT_SUFFIX,
-    ERROR_READING_FILE,
-    SAVED_HOTKEY,
-    SAVED_FILE,
-    STOPPED_PLAYBACK,
-    STOPPED_SCREENSAVER
+/** Enum containing various menu flags used to determine which <b>printf</b> should be displayed to the user, based on earlier program behaviour. */
+enum menu_flags {               ///< start of definition
+    NO_ERRORS,                  ///< default
+    ERROR_NO_TXT_SUFFIX,        ///< when user forgot to input the .txt postfix
+    ERROR_READING_FILE,         ///< when file was corrupted, does not exist or cannot be opened
+    SAVED_HOTKEY,               ///< when the hotkey has been successfully saved
+    SAVED_FILE,                 ///< when the file saved successfully
+    STOPPED_PLAYBACK,           ///< when the recording playback successfully ended
+    STOPPED_SCREENSAVER         ///< when the screensaver has been successfully stopped
 };
 
 void draw_menu(const int flag_id)
@@ -116,7 +119,7 @@ void exec_play_recording(struct f_queue *head, struct f_queue *tail, const int c
         play_recording(tail, hotkey_id);
 }
 
-void init_menu(struct f_queue *head, struct f_queue *tail, const int flag_id, const int hotkey_id); /// prevents cyclic dependency
+void init_menu(struct f_queue *head, struct f_queue *tail, const int flag_id, const int hotkey_id); ///< prevents cyclic dependency
 
 void chosen_recording(struct f_queue *head, struct f_queue *tail, const int hotkey_id)
 {
@@ -148,7 +151,8 @@ void chosen_playback(struct f_queue *head, struct f_queue *tail, const int hotke
         free_recording(&head, &tail);
         init_menu(head, tail, STOPPED_PLAYBACK, hotkey_id);
     }
-    free_recording(&head, &tail);
+    if (tail)
+        free_recording(&head, &tail);
     init_menu(head, tail, ERROR_READING_FILE, hotkey_id);
 }
 

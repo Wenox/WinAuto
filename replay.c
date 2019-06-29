@@ -1,12 +1,14 @@
+/** @file */
+
 #define WINVER 0x0500
 #include <windows.h>
 #include <f_queue.h>
+#include <pressed_key.h>
 
 #define _GETCURSOR 1
 #define _GETKEY 2
 #define _SLEEP 3
 
-/** function sends keyboard or mouse input, based on KEY_CODE */
 void send_input(const int KEY_CODE)
 {
     if (KEY_CODE <= 2) { /** mouse event */
@@ -39,7 +41,6 @@ void send_input(const int KEY_CODE)
     }
 }
 
-/** function replays the recording */
 void play_recording(struct f_queue *tail, const int hotkey_id)
 {
     while (tail) {
@@ -47,11 +48,11 @@ void play_recording(struct f_queue *tail, const int hotkey_id)
             return;
 
         if (tail->f_type == _GETCURSOR)
-            SetCursorPos(tail->f_args[0], tail->f_args[1]);
+            SetCursorPos(tail->f_args[0], tail->f_args[1]);     ///< Simulates cursor's position
         else if (tail->f_type == _GETKEY)
-            send_input(tail->f_args[0]);
+            send_input(tail->f_args[0]);                        ///< Simulates keystroke
         else if (tail->f_type == _SLEEP)
-            Sleep(tail->f_args[0]);
+            Sleep(tail->f_args[0]);                             ///< Simulates waiting interval in between keystrokes and/or cursor movements
 
         tail = tail->prev;
     }

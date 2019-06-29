@@ -1,3 +1,5 @@
+/** @file */
+
 #ifndef KEY_CODES_H_INCLUDED
 #define KEY_CODES_H_INCLUDED
 

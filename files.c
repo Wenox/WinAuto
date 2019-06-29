@@ -1,19 +1,18 @@
+/** @file */
+
 #include <stdio.h>
 #include <f_queue.h>
 #include <functions_queue.h>
 #include <stdbool.h>
 
-/** TEMPORARY */
 void save_recording(struct f_queue *tail, char *file_name)
 {
     FILE *f = fopen(file_name, "w");
-    if (f == NULL) {
-        printf ("f == NULL\n");
+    if (f == NULL)
         return;
-    }
 
     while (tail) {
-        fprintf(f, "%d %d %d\n", tail->f_type, tail->f_args[0], tail->f_args[1]);
+        fprintf(f, "%d %d %d\n", tail->f_type, tail->f_args[0], tail->f_args[1]); ///< The data is saved in <b><int> <int> <int></b> fashion.
         tail = tail->prev;
     }
 
@@ -30,8 +29,8 @@ bool load_recording(struct f_queue **head, struct f_queue **tail, char *file_nam
     char buffer[256];
     int f_type, arg1, arg2;
     while (fgets(buffer, sizeof(buffer), f) != NULL) {
-        if (sscanf(buffer, "%d %d %d", &f_type, &arg1, &arg2) != 3)
-            goto error;
+        if (sscanf(buffer, "%d %d %d", &f_type, &arg1, &arg2) != 3) ///< Basic file validation.
+            goto error; ///< In case of exception.
 
         add_function(head, tail, f_type, arg1, arg2);
     }
@@ -39,6 +38,6 @@ bool load_recording(struct f_queue **head, struct f_queue **tail, char *file_nam
     fclose(f);
     return true;
 
-error:
+error: ///< <b>goto</b> is not necessarily harmful when handling errors, it makes the code simple and can even increase readability.
     return false;
 }

@@ -1,13 +1,10 @@
+/** @file */
+
 #include <windows.h>
 #include <time.h>
 #include <stdio.h>
 #include <pressed_key.h>
 #include <smooth_cursor.h>
-
-/** Functions in this file are not used yet. Just definitions, waiting for their usage later on. */
-/** Functions in this file are not used yet. Just definitions, waiting for their usage later on. */
-/** Functions in this file are not used yet. Just definitions, waiting for their usage later on. */
-
 
 void move_cursor(const int x1, const int y1, const int x2, const int y2, const int duration)
 {
@@ -65,17 +62,17 @@ void smooth_transition(void(*direction)(float *, float *, const float, const flo
         direction(x1, y1, x_jump, y_jump, sleep_delay);
         num_of_jumps--;
     }
-    SetCursorPos(x2, y2); // rarely final position's fix is needed, in case if cursor is off by 1 pixel
+    SetCursorPos(x2, y2);           ///< rarely final position's fix is needed, in case if cursor is off by 1 pixel
     float remaining_time = duration - (clock() - move_duration);
-    if (remaining_time > 0)
-        Sleep(remaining_time); // transition is not 100% accurate in time (usually +- 5%), so if transition took less than expected, wait
+    if (remaining_time > 0)         ///< transition is not 100% accurate in time (usually +- 5%), so if transition took less than expected, wait
+        Sleep(remaining_time);
 }
 
 short smooth_cursor_fps(float x1, float y1, const short x2, const short y2, const short duration, const short fps)
 {
     const float sleep_delay = 1000.0 / fps;
-    const short dx = abs(x2 - x1);
-    const short dy = abs(y2 - y1);
+    const short dx = abs(x2 - x1);          ///< absolute value: total distance the cursor has to travel along x axis cannot be negative
+    const short dy = abs(y2 - y1);          ///< absolute value: total distance the cursor has to travel along y axis cannot be negative
     short num_of_jumps = (short) duration / sleep_delay;
     const float x_jump = (float) dx / num_of_jumps;
     const float y_jump = (float) dy / num_of_jumps;
@@ -105,7 +102,7 @@ int get_input(const int MIN, const int MAX)
 void wrapper_get_input(int * const speed, int * const min_fps)
 {
     printf("Choose speed of cursor [1 - slowest, 10 - fastest]:\n");
-    *speed = 11 - get_input(1, 10);
+    *speed = 11 - get_input(1, 10);         ///< The value has to be inverted in order to make "logical sense".
 
     printf("Choose minimal FPS of cursor [1 to 99, recommended 60]\n");
     *min_fps = get_input(1, 99);
@@ -125,23 +122,22 @@ void exec_screen_saver(const int hotkey_id)
     FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
 }
 
-/** debugging/testing */
 void screen_saver(int x2, int y2, const int screen_width, const int screen_height, const int speed, const int min_fps, const int hotkey_id)
 {
-    if (check_key(hotkey_id)) /// stop condition: screensaver ends when hotkey is HELD
+    if (check_key(hotkey_id))                       ///< stop condition: screensaver ends when hotkey is HELD
         return;
 
     int previous_x2 = x2;
     int previous_y2 = y2;
-    x2 = rand() % screen_width;
-    y2 = rand() % screen_height;
-    int duration = rand() % (200 * speed) + 100;
-    int fps = rand () % (101 - min_fps) + min_fps;
+    x2 = rand() % screen_width;                     ///< The next x cursor's position is computed with random function.
+    y2 = rand() % screen_height;                    ///< The next y cursor's position is computed with random function.
+    int duration = rand() % (200 * speed) + 100;    ///< Duration is also computed with random function, and depends on cursor's speed.
+    int fps = rand () % (101 - min_fps) + min_fps;  ///< FPS is also computed with random function, and depends on min_fps parameter. (smoothness parameter)
 
     system("cls");
-    printf("HOLD hotkey to stop\n");
+    printf("HOLD hotkey to stop\n");                ///< The key has to be held in order to stop the process, not instantenously pressed.
     printf("fps: %d", fps);
 
     smooth_cursor_fps(previous_x2, previous_y2, x2, y2, duration, fps);
-    screen_saver(x2, y2, screen_width, screen_height, speed, min_fps, hotkey_id);
+    screen_saver(x2, y2, screen_width, screen_height, speed, min_fps, hotkey_id);   ///< recursive call
 }
