@@ -40,6 +40,5 @@ bool load_recording(struct f_queue **head, struct f_queue **tail, char *file_nam
     return true;
 
 error:
-    free_recording(&head, &tail);
     return false;
 }

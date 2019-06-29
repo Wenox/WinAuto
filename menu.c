@@ -148,6 +148,7 @@ void chosen_playback(struct f_queue *head, struct f_queue *tail, const int hotke
         free_recording(&head, &tail);
         init_menu(head, tail, STOPPED_PLAYBACK, hotkey_id);
     }
+    free_recording(&head, &tail);
     init_menu(head, tail, ERROR_READING_FILE, hotkey_id);
 }
 
