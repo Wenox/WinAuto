@@ -6,10 +6,16 @@
 #include <replay.h>
 #include <f_queue.h>
 
-void draw_menu(const int error_id)
+enum input_errors {
+    NO_ERRORS,
+    ERROR_NO_TXT_SUFFIX,
+    ERROR_MISSING_FILE
+} input_errors;
+
+void draw_menu(enum input_errors err_id)
 {
     system("cls");
-    switch (error_id) {
+    switch (err_id) {
         case 0:
             printf("WinAuto\n");
             break;
@@ -71,9 +77,27 @@ void exec_play_recording(struct f_queue *head, struct f_queue *tail, const int c
         play_recording(tail);
 }
 
-void init_menu(struct f_queue *head, struct f_queue *tail, const int error_id)
+
+void chosen_playback(struct f_queue *head, struct f_queue *tail)
 {
-    draw_menu(error_id);
+    printf("Type in file name (i.e: myfile.txt):\n");
+    char file_name[64];
+    scanf("%s", file_name);
+    printf("\n%s\n", file_name);
+
+    if (load_recording(&head, &tail, file_name)) {
+        int cycles_num = get_cycles_num();
+        exec_play_recording(head, tail, cycles_num);
+        FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
+        free_recording(&head, &tail);
+        init_menu(head, tail, NO_ERRORS);
+    }
+    init_menu(head, tail, ERROR_MISSING_FILE);
+}
+
+void init_menu(struct f_queue *head, struct f_queue *tail, enum input_errors err_id)
+{
+    draw_menu(err_id);
 
     int choice = get_choice();
 
@@ -91,22 +115,12 @@ void init_menu(struct f_queue *head, struct f_queue *tail, const int error_id)
                     trim_list(&head);
                     save_recording(tail, file_name);
                     free_recording(&head, &tail);
-                    init_menu(head, tail, 0);
+                    init_menu(head, tail, NO_ERRORS);
             }
-            init_menu(head, tail, 1);
+            init_menu(head, tail, ERROR_NO_TXT_SUFFIX);
             break;
         case 3:
-            printf("Type in file name (i.e: myfile.txt):\n");
-            scanf("%s", file_name);
-            printf("\n%s\n", file_name);
-            if (load_recording(&head, &tail, file_name)) {
-                int cycles_num = get_cycles_num();
-                exec_play_recording(head, tail, cycles_num);
-                FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
-                free_recording(&head, &tail);
-                init_menu(head, tail, 0);
-            }
-            init_menu(head, tail, 2);
+            chosen_playback(head, tail);
             break;
         case 4:
             return;
