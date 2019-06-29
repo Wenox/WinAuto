@@ -7,6 +7,7 @@
 #include <replay.h>
 #include <functions_queue.h>
 #include <pressed_key.h>
+#include <smooth_cursor.h>
 
 enum menu_flags {
     NO_ERRORS,
@@ -33,7 +34,7 @@ void draw_menu(int err_id)
             printf("ERROR: No such file or file is corrupted\n\n");
             break;
         case 3:
-            printf("Hotkey set successfully\n\n");
+            printf("Hotkeey set successfully\n\n");
         case 4:
             printf("File saved successfully\n\n");
         case 5:
@@ -114,6 +115,8 @@ void exec_play_recording(struct f_queue *head, struct f_queue *tail, const int c
     for (int i = 0; i < cycles_num; i++)
         play_recording(tail, hotkey_id);
 }
+
+void init_menu(struct f_queue *head, struct f_queue *tail, int err_id, int hotkey_id); /// prevents cyclic dependency
 
 void chosen_recording(struct f_queue *head, struct f_queue *tail, int hotkey_id)
 {
