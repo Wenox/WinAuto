@@ -1,6 +1,7 @@
 #include <windows.h>
 #include <time.h>
 #include <stdio.h>
+#include <pressed_key.h>
 
 /** Functions in this file are not used yet. Just definitions, waiting for their usage later on. */
 /** Functions in this file are not used yet. Just definitions, waiting for their usage later on. */
@@ -89,44 +90,57 @@ short smooth_cursor_fps(float x1, float y1, const short x2, const short y2, cons
     return -1;
 }
 
-/** debugging/testing */
-void getcursor_movecursor()
+int get_input(const int MIN, const int MAX)
 {
-    POINT p[300] = {};
+    int input = 0;
 
-    Sleep(1000);
-    for (int i = 0; i < 300; i++) {
-        GetCursorPos(&p[i]);
-        printf("x: %d, y: %d\n", p[i].x, p[i].y);
-        Sleep(10);
-    }
-    printf("Stopped recording.\n");
-    Sleep(2000);
-    system("cls");
-    printf("100 FPS replay\n");
-    for (int i = 0; i < 300; i++) {
-    SetCursorPos(p[i].x, p[i].y);
-    Sleep(10);
-    }
-    Sleep(2000);
-    printf("slow-mo 10 FPS replay");
-    for (int i = 0; i < 300; i++) {
-    SetCursorPos(p[i].x, p[i].y);
-    Sleep(100);
-    }
+    while (input < MIN || input > MAX)
+        if (1 != scanf("%d", &input))
+            fseek(stdin, 0, SEEK_END);
+
+    return input;
+}
+
+void wrapper_get_input(int *speed, int *min_fps)
+{
+    printf("Choose speed of cursor [1 - slowest, 10 - fastest]:\n");
+    *speed = 11 - get_input(1, 10);
+
+    printf("Choose minimal FPS of cursor [1 to 99, recommended 60]\n");
+    *min_fps = get_input(1, 99);
+}
+
+void exec_screen_saver(int hotkey_id)
+{
+    const int gScreenWidth = GetSystemMetrics(SM_CXSCREEN);
+    const int gScreenHeight = GetSystemMetrics(SM_CYSCREEN);
+    int speed = 0, min_fps = 0;
+
+    wrapper_get_input(&speed, &min_fps);
+
+    printf("%d %d", speed, min_fps);
+
+    screen_saver(0, 0, gScreenWidth, gScreenHeight, speed, min_fps, hotkey_id);
+    FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
 }
 
 /** debugging/testing */
-void __random_smooth_move(int x2, int y2)
+void screen_saver(int x2, int y2, int screen_width, int screen_height, int speed, int min_fps, int hotkey_id)
 {
+    if (check_key(hotkey_id)) /// stop condition: screensaver ends when hotkey is HELD
+        return;
+
     int previous_x2 = x2;
     int previous_y2 = y2;
-    x2 = rand() % 1920;
-    y2 = rand() % 1080;
-    int duration = rand() % 1000 + 20;
-    int fps = rand () % 100;
+    x2 = rand() % screen_width;
+    y2 = rand() % screen_height;
+    int duration = rand() % (200 * speed) + 100;
+    int fps = rand () % (101 - min_fps) + min_fps;
+
     system("cls");
+    printf("HOLD hotkey to stop\n");
     printf("fps: %d", fps);
+
     smooth_cursor_fps(previous_x2, previous_y2, x2, y2, duration, fps);
-    __random_smooth_move(x2, y2);
+    screen_saver(x2, y2, screen_width, screen_height, speed, min_fps, hotkey_id);
 }

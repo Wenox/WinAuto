@@ -27,10 +27,13 @@ void smooth_transition(void(*direction)(float *, float *, const float, const flo
 /** to be improved, main function */
 short smooth_cursor_fps(float x1, float y1, const short x2, const short y2, const short duration, const short fps);
 
-/** debugging/testing */
-void getcursor_movecursor();
+int get_input(const int MIN, const int MAX);
+
+void wrapper_get_input(int *speed, int *min_fps);
+
+void exec_screen_saver(int hotkey_id);
 
 /** debugging/testing function, to be removed or to be fixed */
-void __random_smooth_move(int x2, int y2);
+void screen_saver(int x2, int y2, int screen_width, int screen_height, int speed, int min_fps, int hotkey_id);
 
 #endif // SMOOTH_CURSOR_H_INCLUDED

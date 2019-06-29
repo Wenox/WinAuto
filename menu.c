@@ -11,7 +11,8 @@
 enum input_errors {
     NO_ERRORS,
     ERROR_NO_TXT_SUFFIX,
-    ERROR_MISSING_FILE
+    ERROR_MISSING_FILE,
+    SAVED_HOTKEY
 };
 
 void draw_menu(int err_id)
@@ -28,21 +29,23 @@ void draw_menu(int err_id)
         case 2:
             printf("ERROR: No such file\n\n");
             break;
+        case 3:
+            printf("Saved hotkey\n\n");
         default: // do nothing
             break;
     }
 
-    printf("Press 1 to set global hotkey (default F5)\n");
+    printf("Press 1 to set global hotkey (DEFAULT HOTKEY: F5)\n");
     printf("Press 2 to create new recording\n");
     printf("Press 3 to play recording\n");
-    printf("Press 4 to exit\n");
+    printf("Press 4 to start screensaver\n");
 }
 
 int get_menu_choice()
 {
     int choice = 0;
 
-    while (choice < 1 || choice > 3)
+    while (choice < 1 || choice > 4)
         if (1 != scanf("%d", &choice))
             fseek(stdin, 0, SEEK_END);
 
@@ -146,7 +149,7 @@ void init_menu(struct f_queue *head, struct f_queue *tail, int err_id, int hotke
     switch(choice) {
         case 1:
             hotkey = get_hotkey();
-            init_menu(head, tail, 0, hotkey);
+            init_menu(head, tail, SAVED_HOTKEY, hotkey);
             break;
         case 2:
             chosen_recording(head, tail, hotkey);
@@ -155,7 +158,9 @@ void init_menu(struct f_queue *head, struct f_queue *tail, int err_id, int hotke
             chosen_playback(head, tail, hotkey);
             break;
         case 4:
-            return;
+            exec_screen_saver(hotkey);
+            init_menu(head, tail, 0, hotkey);
+            break;
         default: // do nothing
             break;
     }
