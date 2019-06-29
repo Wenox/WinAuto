@@ -46,13 +46,13 @@ void add_sleep(struct f_queue **head, struct f_queue **tail, const int sleep_dur
 }
 
 /** keyboard/mouse recording engine */
-void record(struct f_queue **head, struct f_queue **tail, const int sleep_dur)
+void record(struct f_queue **head, struct f_queue **tail, const int sleep_dur, const int hotkey_id)
 {
     int key_buff[2] = {-1, -1};               // buffer for curr and prev pressed key
     POINT cursor_buff[2] = {-1};              // buffer for curr and prev cursor position
 
-    printf("recording [press W to stop]\n");
-    while(key_buff[1] != KEY_W) {             // stop recording when 'W' is pressed (to be improved)
+    printf("RECORDING...\n[press your hotkey to stop]\n");
+    while(key_buff[1] != hotkey_id) {             // stop recording when 'W' is pressed (to be improved)
         add_cursor(head, tail, cursor_buff);
         add_keystroke(head, tail, key_buff);
         add_sleep(head, tail, sleep_dur);

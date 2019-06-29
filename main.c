@@ -14,7 +14,7 @@ int main()
     struct f_queue *headptr = NULL;
     struct f_queue *tailptr = NULL;
 
-    init_menu(headptr, tailptr, 0);
+    init_menu(headptr, tailptr, 0, 0);
 
     return 0;
 }
