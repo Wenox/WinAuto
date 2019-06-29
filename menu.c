@@ -8,7 +8,7 @@
 #include <functions_queue.h>
 #include <pressed_key.h>
 
-enum input_errors {
+enum menu_flags {
     NO_ERRORS,
     ERROR_NO_TXT_SUFFIX,
     ERROR_READING_FILE,
