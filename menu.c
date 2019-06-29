@@ -11,8 +11,11 @@
 enum input_errors {
     NO_ERRORS,
     ERROR_NO_TXT_SUFFIX,
-    ERROR_MISSING_FILE,
-    SAVED_HOTKEY
+    ERROR_READING_FILE,
+    SAVED_HOTKEY,
+    SAVED_FILE,
+    STOPPED_PLAYBACK,
+    STOPPED_SCREENSAVER
 };
 
 void draw_menu(int err_id)
@@ -27,10 +30,16 @@ void draw_menu(int err_id)
             printf("ERROR: File name must end with .txt suffix\n\n");
             break;
         case 2:
-            printf("ERROR: No such file\n\n");
+            printf("ERROR: No such file or file is corrupted\n\n");
             break;
         case 3:
-            printf("Saved hotkey\n\n");
+            printf("Hotkey set successfully\n\n");
+        case 4:
+            printf("File saved successfully\n\n");
+        case 5:
+            printf("Playback finished or interrupted\n\n");
+        case 6:
+            printf("Welcome back\n\n");
         default: // do nothing
             break;
     }
@@ -118,7 +127,7 @@ void chosen_recording(struct f_queue *head, struct f_queue *tail, int hotkey_id)
         trim_list(&head);
         save_recording(tail, file_name);
         free_recording(&head, &tail);
-        init_menu(head, tail, NO_ERRORS, hotkey_id);
+        init_menu(head, tail, SAVED_FILE, hotkey_id);
     }
     init_menu(head, tail, ERROR_NO_TXT_SUFFIX, hotkey_id);
 }
@@ -134,9 +143,9 @@ void chosen_playback(struct f_queue *head, struct f_queue *tail, const int hotke
         exec_play_recording(head, tail, cycles_num, hotkey_id);
         FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
         free_recording(&head, &tail);
-        init_menu(head, tail, NO_ERRORS, hotkey_id);
+        init_menu(head, tail, STOPPED_PLAYBACK, hotkey_id);
     }
-    init_menu(head, tail, ERROR_MISSING_FILE, hotkey_id);
+    init_menu(head, tail, ERROR_READING_FILE, hotkey_id);
 }
 
 void init_menu(struct f_queue *head, struct f_queue *tail, int err_id, int hotkey_id)
@@ -159,7 +168,7 @@ void init_menu(struct f_queue *head, struct f_queue *tail, int err_id, int hotke
             break;
         case 4:
             exec_screen_saver(hotkey);
-            init_menu(head, tail, 0, hotkey);
+            init_menu(head, tail, STOPPED_SCREENSAVER, hotkey);
             break;
         default: // do nothing
             break;
