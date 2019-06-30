@@ -11,6 +11,28 @@
 #include <pressed_key.h>
 #include <smooth_cursor.h>
 
+void print_help()
+{
+    printf("Welcome to WinAuto\n");
+    printf("You chose -h flag\n\n");
+    printf("Option (1): choose the hotkey. This hotkey will be used in options (2), (3), (4)\n\n");
+    printf("Option (2): start the recording. Save as <file-name>.txt, for example test.txt. The file has to end with .txt\n");
+    printf("Use hotkey to stop the recording.\n\n");
+    printf("Option (3): start the playback of the recording created in (2). Load the recording with appropriate file name.\n");
+    printf("Choose number of cycles (repetitions) of the replay. If you wish to terminate the playback, press hotkey.\n\n");
+    printf("Option (4): extra feature. Choose arbitrary speed and minfps and start the screensaver.\nYou have to HOLD hotkey to terminate, not press\n\n\n");
+    printf("Option (5): to exit program\n\n\n");
+}
+
+bool check_switches(int argc, char **argv)
+{
+    if (argc > 1)
+        if (0 == strcmp(argv[1], "-h"))
+            return true;
+
+    return false;
+}
+
 /** Enum containing various menu flags used to determine which <b>printf</b> should be displayed to the user, based on earlier program behaviour. */
 enum menu_flags {               ///< start of definition
     NO_ERRORS,                  ///< default
@@ -19,7 +41,8 @@ enum menu_flags {               ///< start of definition
     SAVED_HOTKEY,               ///< when the hotkey has been successfully saved
     SAVED_FILE,                 ///< when the file saved successfully
     STOPPED_PLAYBACK,           ///< when the recording playback successfully ended
-    STOPPED_SCREENSAVER         ///< when the screensaver has been successfully stopped
+    STOPPED_SCREENSAVER,        ///< when the screensaver has been successfully stopped
+    HELP_SWITCH
 };
 
 void draw_menu(const int flag_id)
@@ -37,13 +60,20 @@ void draw_menu(const int flag_id)
             printf("ERROR: No such file or file is corrupted\n\n");
             break;
         case 3:
-            printf("Hotkeey set successfully\n\n");
+            printf("Hotkey set successfully\n\n");
+            break;
         case 4:
-            printf("File saved successfully\n\n");
+            printf("Recording saved successfully\n\n");
+            break;
         case 5:
             printf("Playback finished or interrupted\n\n");
+            break;
         case 6:
             printf("Welcome back\n\n");
+            break;
+        case 7:
+            print_help();
+            break;
         default: // do nothing
             break;
     }
@@ -52,13 +82,14 @@ void draw_menu(const int flag_id)
     printf("Press 2 to create new recording\n");
     printf("Press 3 to play recording\n");
     printf("Press 4 to start screensaver\n");
+    printf("Press 5 to exit\n");
 }
 
 int get_menu_choice(void)
 {
     int choice = 0;
 
-    while (choice < 1 || choice > 4)
+    while (choice < 1 || choice > 5)
         if (1 != scanf("%d", &choice))
             fseek(stdin, 0, SEEK_END);
 
@@ -178,6 +209,8 @@ void init_menu(struct f_queue *head, struct f_queue *tail, const int flag_id, co
             exec_screen_saver(hotkey);
             init_menu(head, tail, STOPPED_SCREENSAVER, hotkey);
             break;
+        case 5:
+            return;
         default: // do nothing
             break;
     }

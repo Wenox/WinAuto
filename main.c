@@ -11,12 +11,15 @@
 #include <files.h>
 #include "test/test.h"
 
-int main()
+int main(int argc, char **argv)
 {
     struct f_queue *headptr = NULL;
     struct f_queue *tailptr = NULL;
 
-    init_menu(headptr, tailptr, 0, 0);
+    if (!check_switches(argc, argv))
+        init_menu(headptr, tailptr, 0, 0);
+    else
+        init_menu(headptr, tailptr, 7, 0);
 
     return 0;
 }

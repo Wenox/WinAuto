@@ -57,4 +57,9 @@ The user chooses if he wants to set new hotkey, create new recording, playback o
 @param hotkey_id the turn-off switch for the program (default <b>F5</b>) */
 void init_menu(struct f_queue *head, struct f_queue *tail, const int flag_id, const int hotkey_id);
 
+/** Function prints detailed manual to the user if -h flag was invoked. */
+void print_help();
+
+/** Function checks the command line input switches. If -h switch is found, detailed manual is printed out to the user.*/
+bool check_switches(int argc, char **argv);
 #endif // MENU_H_INCLUDED
