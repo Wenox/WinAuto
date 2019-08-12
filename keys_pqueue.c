@@ -3,7 +3,7 @@
 #include <key_codes.h>
 
 /** Sorted from the most likely most often pressed key to least likely least often. The priority has been determined by nearly <b>2 000 000</b> registered keypresses throughout weeks of recording. */
-const unsigned short keys_pqueue[104] = {
+const unsigned short keys_pqueue[] = {
 KEY_LMB,    ///< Highest priority to be checked
 KEY_RMB,    ///< Slightly lower priority to be checked, still second highest
 KEY_SPACE,  ///< 3rd highest priority to be checked
