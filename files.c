@@ -12,7 +12,7 @@ void save_recording(struct f_queue *tail, char *file_name)
         return;
 
     while (tail) {
-        fprintf(f, "%d %d %d\n", tail->f_type, tail->f_args[0], tail->f_args[1]); ///< The data is saved in <b><int> <int> <int></b> fashion.
+        fprintf(f, "%d %d %d\n", tail->f_type, tail->f_args[0], tail->f_args[1]); ///< The data is saved in <b><int> <int> <int></b> fashion
         tail = tail->prev;
     }
 
@@ -29,15 +29,13 @@ bool load_recording(struct f_queue **head, struct f_queue **tail, char *file_nam
     char buffer[256];
     int f_type, arg1, arg2;
     while (fgets(buffer, sizeof(buffer), f) != NULL) {
-        if (sscanf(buffer, "%d %d %d", &f_type, &arg1, &arg2) != 3) ///< Basic file validation.
-            goto error; ///< In case of exception.
-
+        if (sscanf(buffer, "%d %d %d", &f_type, &arg1, &arg2) != 3) { ///< Basic file validation
+            fclose(f);
+            return false;
+        }
         add_function(head, tail, f_type, arg1, arg2);
     }
 
     fclose(f);
     return true;
-
-error: ///< <b>goto</b> is not necessarily harmful when handling errors, it makes the code simple and can even increase readability.
-    return false;
 }
