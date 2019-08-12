@@ -61,5 +61,5 @@ void init_menu(struct f_queue *head, struct f_queue *tail, const int flag_id, co
 void print_help();
 
 /** Function checks the command line input switches. If -h switch is found, detailed manual is printed out to the user.*/
-bool check_switches(int argc, char **argv);
+bool h_switch_invoked(int argc, char **argv);
 #endif // MENU_H_INCLUDED

@@ -19,12 +19,12 @@ void print_help()
     printf("Option (2): start the recording. Save as <file-name>.txt, for example test.txt. The file has to end with .txt\n");
     printf("Use hotkey to stop the recording.\n\n");
     printf("Option (3): start the playback of the recording created in (2). Load the recording with appropriate file name.\n");
-    printf("Choose number of cycles (repetitions) of the replay. If you wish to terminate the playback, press hotkey.\n\n");
-    printf("Option (4): extra feature. Choose arbitrary speed and minfps and start the screensaver.\nYou have to HOLD hotkey to terminate, not press\n\n\n");
+    printf("Choose number of cycles (repetitions) of the replay. If you wish to terminate the playback, hold hotkey.\n\n");
+    printf("Option (4): extra feature. Choose arbitrary speed and minfps to start the screensaver.\nYou have to HOLD hotkey to terminate\n\n\n");
     printf("Option (5): to exit program\n\n\n");
 }
 
-bool check_switches(int argc, char **argv)
+bool h_switch_invoked(int argc, char **argv)
 {
     if (argc > 1)
         if (0 == strcmp(argv[1], "-h"))
@@ -42,7 +42,7 @@ enum menu_flags {               ///< start of definition
     SAVED_FILE,                 ///< when the file saved successfully
     STOPPED_PLAYBACK,           ///< when the recording playback successfully ended
     STOPPED_SCREENSAVER,        ///< when the screensaver has been successfully stopped
-    HELP_SWITCH
+    HELP_SWITCH                 ///< when program was ran with '-h' switch
 };
 
 void draw_menu(const int flag_id)
@@ -150,7 +150,7 @@ void exec_play_recording(struct f_queue *head, struct f_queue *tail, const int c
         play_recording(tail, hotkey_id);
 }
 
-void init_menu(struct f_queue *head, struct f_queue *tail, const int flag_id, const int hotkey_id); ///< prevents cyclic dependency
+void init_menu(struct f_queue *head, struct f_queue *tail, const int flag_id, const int hotkey_id); ///< cyclic dependency
 
 void chosen_recording(struct f_queue *head, struct f_queue *tail, const int hotkey_id)
 {
@@ -166,6 +166,7 @@ void chosen_recording(struct f_queue *head, struct f_queue *tail, const int hotk
         free_recording(&head, &tail);
         init_menu(head, tail, SAVED_FILE, hotkey_id);
     }
+
     init_menu(head, tail, ERROR_NO_TXT_SUFFIX, hotkey_id);
 }
 
@@ -182,8 +183,10 @@ void chosen_playback(struct f_queue *head, struct f_queue *tail, const int hotke
         free_recording(&head, &tail);
         init_menu(head, tail, STOPPED_PLAYBACK, hotkey_id);
     }
+
     if (tail)
         free_recording(&head, &tail);
+
     init_menu(head, tail, ERROR_READING_FILE, hotkey_id);
 }
 

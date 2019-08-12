@@ -16,7 +16,7 @@ int main(int argc, char **argv)
     struct f_queue *headptr = NULL;
     struct f_queue *tailptr = NULL;
 
-    if (!check_switches(argc, argv))
+    if (!h_switch_invoked(argc, argv))
         init_menu(headptr, tailptr, 0, 0);
     else
         init_menu(headptr, tailptr, 7, 0);
