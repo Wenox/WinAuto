@@ -1,44 +1,58 @@
 /** @file */
 
 #define WINVER 0x0500
+
 #include <windows.h>
 #include <f_queue.h>
 #include <pressed_key.h>
+#include <stdbool.h>
 
 #define _GETCURSOR 1
 #define _GETKEY 2
 #define _SLEEP 3
 
+bool is_mouse_event(const int KEY_CODE)
+{
+    return KEY_CODE <= 2;
+}
+
+void send_mouse_input(const int KEY_CODE)
+{
+    INPUT ip = {0};
+    ip.type = INPUT_MOUSE;
+
+    switch(KEY_CODE) {
+        case 1:
+                ip.mi.dwFlags = MOUSEEVENTF_LEFTDOWN | MOUSEEVENTF_LEFTUP;
+                break;
+        case 2:
+                ip.mi.dwFlags = MOUSEEVENTF_RIGHTDOWN | MOUSEEVENTF_RIGHTUP;
+                break;
+        default:
+                return;
+    }
+
+    SendInput(1, &ip, sizeof(INPUT));
+}
+
+void send_keyboard_input(const int KEY_CODE)
+{
+    INPUT ip = {0};
+    ip.type = INPUT_KEYBOARD;
+
+    ip.ki.wVk = KEY_CODE;
+    SendInput(1, &ip, sizeof(INPUT));   // press
+
+    ip.ki.dwFlags = KEYEVENTF_KEYUP;
+    SendInput(1, &ip, sizeof(INPUT));   // release
+}
+
 void send_input(const int KEY_CODE)
 {
-    if (KEY_CODE <= 2) { /** mouse event */
-        INPUT ip = {0};
-        ip.type = INPUT_MOUSE;
-
-        switch(KEY_CODE) {
-            case 1:
-                    ip.mi.dwFlags = MOUSEEVENTF_LEFTDOWN | MOUSEEVENTF_LEFTUP;
-                    break;
-            case 2:
-                    ip.mi.dwFlags = MOUSEEVENTF_RIGHTDOWN | MOUSEEVENTF_RIGHTUP;
-                    break;
-            default:
-                    return;
-        }
-        SendInput(1, &ip, sizeof(INPUT));
-        return;
-    }
-    else { /** keyboard event */
-        INPUT ip = {0};
-        ip.type = INPUT_KEYBOARD;
-
-        ip.ki.wVk = KEY_CODE;
-        SendInput(1, &ip, sizeof(INPUT));
-
-        ip.ki.dwFlags = KEYEVENTF_KEYUP;
-        SendInput(1, &ip, sizeof(INPUT));
-        return;
-    }
+    if (is_mouse_event(KEY_CODE))
+        send_mouse_input(KEY_CODE);
+    else
+        send_keyboard_input(KEY_CODE);
 }
 
 void play_recording(struct f_queue *tail, const int hotkey_id)
@@ -52,7 +66,7 @@ void play_recording(struct f_queue *tail, const int hotkey_id)
         else if (tail->f_type == _GETKEY)
             send_input(tail->f_args[0]);                        ///< Simulates keystroke
         else if (tail->f_type == _SLEEP)
-            Sleep(tail->f_args[0]);                             ///< Simulates waiting interval in between keystrokes and/or cursor movements
+            Sleep(tail->f_args[0]);                             ///< Simulates waiting interval in between keystrokes and/or cursor's movements
 
         tail = tail->prev;
     }

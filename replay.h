@@ -3,6 +3,12 @@
 #ifndef REPLAY_H_INCLUDED
 #define REPLAY_H_INCLUDED
 
+bool is_mouse_event(const int KEY_CODE);
+
+void send_mouse_input(const int KEY_CODE);
+
+void send_keyboard_input(const int KEY_CODE);
+
 /** Function sends keyboard or mouse input event during the recording playback phase. The event is chosen on retrieved <b>KEY_CODE</b>.
 The key codes of <b>2 or less</b> correspond to mouse event. Other key codes correspond to keyboard event.
 The events are performed at an instant of time.
