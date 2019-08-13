@@ -143,11 +143,11 @@ void exec_play_recording(struct f_queue *head, struct f_queue *tail, const int c
         make_queue_cyclic(head, tail);
         play_recording(tail, hotkey_id);
         unmake_queue_cyclic(head, tail);
-        return;
     }
-
-    for (int i = 0; i < cycles_num; i++)
-        play_recording(tail, hotkey_id);
+    else {
+        for (int i = 0; i < cycles_num; i++)
+            play_recording(tail, hotkey_id);
+    }
 }
 
 void init_menu(struct f_queue *head, struct f_queue *tail, const int flag_id, const int hotkey_id); ///< cyclic dependency
@@ -166,8 +166,9 @@ void chosen_recording(struct f_queue *head, struct f_queue *tail, const int hotk
         free_recording(&head, &tail);
         init_menu(head, tail, SAVED_FILE, hotkey_id);
     }
-
-    init_menu(head, tail, ERROR_NO_TXT_SUFFIX, hotkey_id);
+    else {
+        init_menu(head, tail, ERROR_NO_TXT_SUFFIX, hotkey_id);
+    }
 }
 
 void chosen_playback(struct f_queue *head, struct f_queue *tail, const int hotkey_id)
