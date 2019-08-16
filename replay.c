@@ -7,9 +7,9 @@
 #include <pressed_key.h>
 #include <stdbool.h>
 
-#define _GETCURSOR 1
-#define _GETKEY 2
-#define _SLEEP 3
+#define GET_CURSOR 1
+#define GET_KEY 2
+#define SLEEP 3
 
 bool is_mouse_event(const int KEY_CODE)
 {
@@ -61,11 +61,11 @@ void play_recording(struct f_queue *tail, const int hotkey_id)
         if (check_key(hotkey_id))
             return;
 
-        if (tail->f_type == _GETCURSOR)
+        if (tail->f_type == GET_CURSOR)
             SetCursorPos(tail->f_args[0], tail->f_args[1]);     ///< Simulates cursor's position
-        else if (tail->f_type == _GETKEY)
+        else if (tail->f_type == GET_KEY)
             send_input(tail->f_args[0]);                        ///< Simulates keystroke
-        else if (tail->f_type == _SLEEP)
+        else if (tail->f_type == SLEEP)
             Sleep(tail->f_args[0]);                             ///< Simulates waiting interval in between keystrokes and/or cursor's movements
 
         tail = tail->prev;
