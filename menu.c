@@ -11,6 +11,8 @@
 #include <pressed_key.h>
 #include <smooth_cursor.h>
 
+#define error(msg) fprintf(stderr, msg)
+
 void print_help()
 {
     printf("Welcome to WinAuto\n");
@@ -54,10 +56,10 @@ void draw_menu(const int flag_id)
             printf("WinAuto\n");
             break;
         case 1:
-            printf("ERROR: File name must end with .txt suffix\n\n");
+            error("ERROR: File name must end with .txt suffix\n\n");
             break;
         case 2:
-            printf("ERROR: No such file or file is corrupted\n\n");
+            error("ERROR: No such file or file is corrupted\n\n");
             break;
         case 3:
             printf("Hotkey set successfully\n\n");
