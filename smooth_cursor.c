@@ -68,7 +68,7 @@ void smooth_transition(void(*direction)(float *, float *, const float, const flo
         Sleep(remaining_time);
 }
 
-short smooth_cursor_fps(float x1, float y1, const short x2, const short y2, const short duration, const short fps)
+void exec_smooth_cursor(float x1, float y1, const short x2, const short y2, const short duration, const short fps)
 {
     const float sleep_delay = 1000.0 / fps;
     const short dx = abs(x2 - x1);          ///< absolute value: total distance the cursor has to travel along x axis cannot be negative
@@ -85,7 +85,6 @@ short smooth_cursor_fps(float x1, float y1, const short x2, const short y2, cons
         smooth_transition(direction_LD, &x1, &y1, x_jump, y_jump, sleep_delay, num_of_jumps, x2, y2, duration);
     else if (x1 >= x2 && y1 >= y2)
         smooth_transition(direction_LU, &x1, &y1, x_jump, y_jump, sleep_delay, num_of_jumps, x2, y2, duration);
-    return -1;
 }
 
 int get_input(const int MIN, const int MAX)
@@ -138,6 +137,6 @@ void screen_saver(int x2, int y2, const int screen_width, const int screen_heigh
     printf("HOLD hotkey to stop\n");                ///< The key has to be held in order to stop the process, not instantenously pressed.
     printf("fps: %d", fps);
 
-    smooth_cursor_fps(previous_x2, previous_y2, x2, y2, duration, fps);
+    exec_smooth_cursor(previous_x2, previous_y2, x2, y2, duration, fps);
     screen_saver(x2, y2, screen_width, screen_height, speed, min_fps, hotkey_id);   ///< recursive call
 }

@@ -67,7 +67,7 @@ void smooth_transition(void(*direction)(float *, float *, const float, const flo
 @param y2 final cursor's y position
 @param duration duration of the transition
 @param fps FPS of the translation. <b>Custom feature that imitates smooth, less smooth or lagging cursor depending on the value.</b> */
-short smooth_cursor_fps(float x1, float y1, const short x2, const short y2, const short duration, const short fps);
+void exec_smooth_cursor(float x1, float y1, const short x2, const short y2, const short duration, const short fps);
 
 /** Wrapper function for <b>scanf</b> further usage. The input request occurs in a loop until proper data value is entered by the user.
 @param MIN defines lower bound of the correct data set
