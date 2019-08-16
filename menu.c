@@ -152,7 +152,7 @@ void exec_play_recording(struct f_queue *head, struct f_queue *tail, const int c
     }
 }
 
-void init_menu(struct f_queue *head, struct f_queue *tail, const int flag_id, const int hotkey_id); ///< cyclic dependency
+void init_menu(struct f_queue *head, struct f_queue *tail, const int flag_id, const int hotkey_id);
 
 void chosen_recording(struct f_queue *head, struct f_queue *tail, const int hotkey_id)
 {
@@ -187,7 +187,8 @@ void chosen_playback(struct f_queue *head, struct f_queue *tail, const int hotke
         init_menu(head, tail, STOPPED_PLAYBACK, hotkey_id);
     }
     else { // error when reading file
-        free_recording(&head, &tail);
+        if (tail)
+            free_recording(&head, &tail);
         init_menu(head, tail, ERROR_READING_FILE, hotkey_id);
     }
 }
